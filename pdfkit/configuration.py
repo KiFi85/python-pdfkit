@@ -13,20 +13,20 @@ class Configuration(object):
 
         if not self.wkhtmltopdf:
             if sys.platform == 'win32':
-                self.wkhtmltopdf = subprocess.Popen(command, shell=True,
+                self.wkhtmltopdf = subprocess.Popen(self.wkhtmltopdf, creationflags=0x08000000,
                                                     stdout=subprocess.PIPE).communicate()[0].strip()
             else:
-                self.wkhtmltopdf = subprocess.Popen(command, shell=True,
+                self.wkhtmltopdf = subprocess.Popen(self.wkhtmltopdf, creationflags=0x08000000,
                                                     stdout=subprocess.PIPE).communicate()[0].strip()
 
-        # try:
-        #     with open(self.wkhtmltopdf) as f:
-        #         pass
-        # except IOError:
-        #     raise IOError('No wkhtmltopdf executable found: "%s"\n'
-        #                   'If this file exists please check that this process can '
-        #                   'read it. Otherwise please install wkhtmltopdf - '
-        #                   'https://github.com/JazzCore/python-pdfkit/wiki/Installing-wkhtmltopdf' % self.wkhtmltopdf)
+        try:
+            with open(self.wkhtmltopdf) as f:
+                pass
+        except IOError:
+            raise IOError('No wkhtmltopdf executable found: "%s"\n'
+                          'If this file exists please check that this process can '
+                          'read it. Otherwise please install wkhtmltopdf - '
+                          'https://github.com/JazzCore/python-pdfkit/wiki/Installing-wkhtmltopdf' % self.wkhtmltopdf)
 
         self.environ = environ
 
