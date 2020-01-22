@@ -9,14 +9,15 @@ class Configuration(object):
         self.meta_tag_prefix = meta_tag_prefix
 
         self.wkhtmltopdf = wkhtmltopdf
+        command = "start /min " + self.wkhtmltopdf
 
         if not self.wkhtmltopdf:
             if sys.platform == 'win32':
-                self.wkhtmltopdf = subprocess.Popen(
-                    ['where', 'wkhtmltopdf'], stdout=subprocess.PIPE).communicate()[0].strip()
+                self.wkhtmltopdf = subprocess.Popen(command, shell=True,
+                                                    stdout=subprocess.PIPE).communicate()[0].strip()
             else:
-                self.wkhtmltopdf = subprocess.Popen(
-                    ['which', 'wkhtmltopdf'], stdout=subprocess.PIPE).communicate()[0].strip()
+                self.wkhtmltopdf = subprocess.Popen(command, shell=True,
+                                                    stdout=subprocess.PIPE).communicate()[0].strip()
 
         try:
             with open(self.wkhtmltopdf) as f:
