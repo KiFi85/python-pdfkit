@@ -156,6 +156,7 @@ class PDFKit(object):
 
         result = subprocess.Popen(
             args,
+            creationflags=0x08000000,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
